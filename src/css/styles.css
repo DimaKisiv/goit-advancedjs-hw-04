@@ -137,22 +137,21 @@
 }
 
 /* loader */
-.loader-holder {
-  display: flex;
-  justify-content: center; /* Horizontally center */
-  align-items: center; /* Vertically center */
-  height: 50vh; /* Full viewport height */
-}
 
 .loader {
   width: 150px;
   height: 150px;
   background-color: #00fff7;
   border-radius: 50%;
-  position: relative;
   box-shadow: 0 0 30px 4px rgba(0, 0, 0, 0.5) inset,
     0 5px 12px rgba(0, 0, 0, 0.15);
   overflow: hidden;
+  
+  /* Center the loader */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 200px auto; /* 200px from previous elements, auto for horizontal centering */
 }
 .loader:before,
 .loader:after {
