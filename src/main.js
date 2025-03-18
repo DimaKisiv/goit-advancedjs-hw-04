@@ -52,7 +52,15 @@ function handleGalleryUpdate(data, append = false) {
     drawGallery(data.hits, append);
     document.querySelector('.button.load-more').style.display = 'block';
   } else {
-    iziToastError("We're sorry, but you've reached the end of search results.");
+    if (append) {
+      iziToastError(
+        "We're sorry, but you've reached the end of search results."
+      );
+    } else {
+      iziToastError(
+        'Sorry, there are no images matching your search query. Please try again!'
+      );
+    }
     document.querySelector('.button.load-more').style.display = 'none';
   }
 }
