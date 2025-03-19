@@ -4,23 +4,9 @@ const API_PIXABAY_URL = 'https://pixabay.com/api/';
 const API_KEY = '49290147-91bc44204d790a43c13c008af';
 
 const itemsPerPage = 15;
-let currentPage = 1;
-let searchText = '';
 
-export async function getFirstPhotosBlock(search) {
-  currentPage = 1;
-  searchText = search;
-  return await getPhotos(search);
-}
-
-export async function getNextPhotosBlock() {
-  currentPage++;
-  return await getPhotos(searchText);
-}
-
-async function getPhotos(text) {
+export async function getPhotos(text, currentPage) {
   try {
-    debugger;
     const encodedText = encodeURIComponent(text);
     const params = {
       key: API_KEY,

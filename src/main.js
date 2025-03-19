@@ -1,7 +1,10 @@
 import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 import { clearGallery, drawGallery } from './js/render-functions';
-import { getFirstPhotosBlock, getNextPhotosBlock } from './js/pixabay-api';
+import { getPhotos } from './js/pixabay-api';
+
+let currentPage = 1;
+let searchText = '';
 
 document.addEventListener('DOMContentLoaded', () => {
   setupEventListeners();
@@ -16,14 +19,16 @@ function setupEventListeners() {
 
 async function handleSearch(event) {
   event.preventDefault();
-  const searchText = event.target.querySelector('input').value;
+  searchText = event.target.querySelector('input').value;
   if (!searchText.trim()) return;
 
   clearGallery();
   toggleLoader(true);
-
+  
+  currentPage = 1;
+  
   try {
-    const data = await getFirstPhotosBlock(searchText);
+    const data = await getPhotos(searchText, currentPage);
     handleGalleryUpdate(data);
   } catch (error) {
     iziToastError('Error fetching images: ' + error.message);
@@ -37,7 +42,7 @@ async function handleLoadMore(event) {
   toggleLoader(true);
 
   try {
-    const data = await getNextPhotosBlock();
+    const data = await getPhotos(searchText, ++currentPage);
     handleGalleryUpdate(data, true);
     smoothScroll();
   } catch (error) {
